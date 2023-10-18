@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/images">
+        <file alias="duck">duck.gif</file>
+        <file alias="process_halt">process_tp_red_smol.gif</file>
+        <file alias="process_go">process_tp_smol.gif</file>
+    </qresource>
+    <qresource prefix="/logo">
+        <file alias="logo">Emblem_of_the_Federal_Air_Transport_Agency.png</file>
+    </qresource>
+</RCC>

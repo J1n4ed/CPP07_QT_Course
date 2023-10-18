@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>799</width>
+    <height>828</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QFrame" name="fr_display">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QLabel" name="lb_content_title">
+         <property name="text">
+          <string>Данные по выбранному аэропорту</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTableView" name="tb_content"/>
+       </item>
+       <item>
+        <widget class="QLabel" name="lb_connection_status">
+         <property name="text">
+          <string>DISCONNECTED</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="lb_connection_anim">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="lb_selection">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QFrame" name="fr_bars">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLabel" name="lb_port_selection">
+         <property name="text">
+          <string>Выбор аэропорта</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="cb_airport"/>
+       </item>
+       <item>
+        <widget class="QFrame" name="fr_selection">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QGroupBox" name="gb_from_date">
+            <property name="title">
+             <string>От</string>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <item>
+              <widget class="QDateEdit" name="de_from_date">
+               <property name="font">
+                <font>
+                 <pointsize>12</pointsize>
+                </font>
+               </property>
+               <property name="locale">
+                <locale language="Russian" country="Russia"/>
+               </property>
+               <property name="dateTime">
+                <datetime>
+                 <hour>0</hour>
+                 <minute>0</minute>
+                 <second>0</second>
+                 <year>2016</year>
+                 <month>8</month>
+                 <day>14</day>
+                </datetime>
+               </property>
+               <property name="maximumDateTime">
+                <datetime>
+                 <hour>23</hour>
+                 <minute>59</minute>
+                 <second>59</second>
+                 <year>2017</year>
+                 <month>9</month>
+                 <day>14</day>
+                </datetime>
+               </property>
+               <property name="minimumDateTime">
+                <datetime>
+                 <hour>0</hour>
+                 <minute>0</minute>
+                 <second>0</second>
+                 <year>2016</year>
+                 <month>8</month>
+                 <day>14</day>
+                </datetime>
+               </property>
+               <property name="displayFormat">
+                <string>dd.MM.yyyy hh:mm A</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="gb_till_date">
+            <property name="title">
+             <string>До</string>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <item>
+              <widget class="QDateTimeEdit" name="de_till_date">
+               <property name="minimumSize">
+                <size>
+                 <width>180</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>12</pointsize>
+                </font>
+               </property>
+               <property name="locale">
+                <locale language="Russian" country="Russia"/>
+               </property>
+               <property name="buttonSymbols">
+                <enum>QAbstractSpinBox::UpDownArrows</enum>
+               </property>
+               <property name="showGroupSeparator" stdset="0">
+                <bool>false</bool>
+               </property>
+               <property name="maximumDateTime">
+                <datetime>
+                 <hour>23</hour>
+                 <minute>59</minute>
+                 <second>59</second>
+                 <year>2017</year>
+                 <month>9</month>
+                 <day>14</day>
+                </datetime>
+               </property>
+               <property name="minimumDateTime">
+                <datetime>
+                 <hour>2</hour>
+                 <minute>45</minute>
+                 <second>0</second>
+                 <year>2016</year>
+                 <month>8</month>
+                 <day>15</day>
+                </datetime>
+               </property>
+               <property name="minimumDate">
+                <date>
+                 <year>2016</year>
+                 <month>8</month>
+                 <day>15</day>
+                </date>
+               </property>
+               <property name="currentSection">
+                <enum>QDateTimeEdit::DaySection</enum>
+               </property>
+               <property name="displayFormat">
+                <string>dd.MM.yyyy hh:mm A</string>
+               </property>
+               <property name="timeSpec">
+                <enum>Qt::LocalTime</enum>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="gb_direction">
+            <property name="title">
+             <string>Направление</string>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <item>
+              <widget class="QRadioButton" name="rb_outgoing">
+               <property name="text">
+                <string>Убытие</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="rb_incoming">
+               <property name="text">
+                <string>Прибытие</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QFrame" name="fr_control">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_8">
+          <item>
+           <widget class="QLabel" name="lb_logo">
+            <property name="minimumSize">
+             <size>
+              <width>300</width>
+              <height>300</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pb_search">
+            <property name="text">
+             <string>Найти</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pb_staticstics">
+            <property name="text">
+             <string>Загруженность</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pb_reconnect">
+            <property name="text">
+             <string>Переподключиться</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pb_close">
+            <property name="text">
+             <string>Выход</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>799</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>Действие</string>
+    </property>
+    <addaction name="action_getports"/>
+    <addaction name="action_load"/>
+    <addaction name="separator"/>
+    <addaction name="action_about"/>
+    <addaction name="separator"/>
+    <addaction name="action_close"/>
+   </widget>
+   <addaction name="menu"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="action_load">
+   <property name="text">
+    <string>Загруженность</string>
+   </property>
+  </action>
+  <action name="action_about">
+   <property name="text">
+    <string>О программе</string>
+   </property>
+  </action>
+  <action name="action_close">
+   <property name="text">
+    <string>Выход</string>
+   </property>
+  </action>
+  <action name="action_getports">
+   <property name="text">
+    <string>Загрузить список аэропортов</string>
+   </property>
+  </action>
+ </widget>
+ <tabstops>
+  <tabstop>cb_airport</tabstop>
+  <tabstop>de_from_date</tabstop>
+  <tabstop>de_till_date</tabstop>
+  <tabstop>pb_search</tabstop>
+  <tabstop>pb_staticstics</tabstop>
+  <tabstop>pb_reconnect</tabstop>
+  <tabstop>pb_close</tabstop>
+  <tabstop>tb_content</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

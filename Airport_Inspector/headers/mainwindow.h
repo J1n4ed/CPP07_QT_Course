@@ -72,6 +72,8 @@ private:
     QMovie * mov_go;
     QPixmap * pix;
     QString portSelection = "";
+    QPixmap * icon_pix;
+    QIcon * icon;
 
     About * about;
     QMessageBox * msg;

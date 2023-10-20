@@ -7,4 +7,9 @@
     <qresource prefix="/logo">
         <file alias="logo">Emblem_of_the_Federal_Air_Transport_Agency.png</file>
     </qresource>
+    <qresource prefix="/icon">
+        <file alias="icon">icon-300.png</file>
+        <file alias="icon-smol">icon-40.png</file>
+        <file alias="icon-ico">icon-300.ico</file>
+    </qresource>
 </RCC>

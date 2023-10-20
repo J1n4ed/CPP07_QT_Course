@@ -12,6 +12,12 @@ MainWindow::MainWindow(QWidget *parent)
     database = new Database(this);
 
     this->setWindowTitle("Инспектор аэропортов, версия 1.0");
+    icon_pix = new QPixmap;
+    icon_pix->load(":/icon/icon-smol");
+    icon = new QIcon;
+    icon->addPixmap(*icon_pix);
+
+    this->setWindowIcon(*icon);
 
     ui->lb_connection_status->setStyleSheet("color:red");
     ui->lb_connection_status->setText("ОТКЛЮЧЕНО ОТ БАЗЫ ДАННЫХ");

@@ -36,7 +36,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     pix = new QPixmap;
     pix->load(":/logo/logo");
-    ui->lb_logo->setPixmap(pix->scaledToHeight(pix->height()/6));
+    ui->lb_logo->setPixmap(pix->scaledToWidth(320));
 
     ui->pb_reconnect->setEnabled(false);
     ui->pb_search->setEnabled(false);

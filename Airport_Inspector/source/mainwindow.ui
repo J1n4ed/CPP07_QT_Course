@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>960</width>
-    <height>750</height>
+    <height>850</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>960</width>
-    <height>750</height>
+    <height>850</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -236,17 +236,17 @@
                </property>
                <property name="maximumDateTime">
                 <datetime>
-                 <hour>23</hour>
+                 <hour>2</hour>
                  <minute>59</minute>
                  <second>59</second>
                  <year>2017</year>
                  <month>9</month>
-                 <day>15</day>
+                 <day>16</day>
                 </datetime>
                </property>
                <property name="minimumDateTime">
                 <datetime>
-                 <hour>0</hour>
+                 <hour>3</hour>
                  <minute>0</minute>
                  <second>0</second>
                  <year>2016</year>
@@ -258,7 +258,7 @@
                 <date>
                  <year>2017</year>
                  <month>9</month>
-                 <day>15</day>
+                 <day>16</day>
                 </date>
                </property>
                <property name="minimumDate">

@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>799</width>
-    <height>828</height>
+    <width>960</width>
+    <height>750</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>960</width>
+    <height>750</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
@@ -32,7 +38,14 @@
         </widget>
        </item>
        <item>
-        <widget class="QTableView" name="tb_content"/>
+        <widget class="QTableView" name="tb_content">
+         <property name="minimumSize">
+          <size>
+           <width>600</width>
+           <height>400</height>
+          </size>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="lb_connection_status">
@@ -79,6 +92,12 @@
        </item>
        <item>
         <widget class="QFrame" name="fr_selection">
+         <property name="minimumSize">
+          <size>
+           <width>320</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
@@ -102,6 +121,9 @@
                <property name="locale">
                 <locale language="Russian" country="Russia"/>
                </property>
+               <property name="buttonSymbols">
+                <enum>QAbstractSpinBox::NoButtons</enum>
+               </property>
                <property name="dateTime">
                 <datetime>
                  <hour>0</hour>
@@ -109,7 +131,7 @@
                  <second>0</second>
                  <year>2016</year>
                  <month>8</month>
-                 <day>14</day>
+                 <day>15</day>
                 </datetime>
                </property>
                <property name="maximumDateTime">
@@ -129,11 +151,55 @@
                  <second>0</second>
                  <year>2016</year>
                  <month>8</month>
-                 <day>14</day>
+                 <day>15</day>
                 </datetime>
                </property>
+               <property name="minimumDate">
+                <date>
+                 <year>2016</year>
+                 <month>8</month>
+                 <day>15</day>
+                </date>
+               </property>
+               <property name="currentSection">
+                <enum>QDateTimeEdit::DaySection</enum>
+               </property>
                <property name="displayFormat">
-                <string>dd.MM.yyyy hh:mm A</string>
+                <string>dd.MM.yyyy</string>
+               </property>
+               <property name="calendarPopup">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTimeEdit" name="te_from_time">
+               <property name="font">
+                <font>
+                 <pointsize>12</pointsize>
+                </font>
+               </property>
+               <property name="calendarPopup">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pb_set_equal">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>40</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>=</string>
                </property>
               </widget>
              </item>
@@ -147,7 +213,7 @@
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_3">
              <item>
-              <widget class="QDateTimeEdit" name="de_till_date">
+              <widget class="QDateEdit" name="de_till_date">
                <property name="minimumSize">
                 <size>
                  <width>180</width>
@@ -175,18 +241,25 @@
                  <second>59</second>
                  <year>2017</year>
                  <month>9</month>
-                 <day>14</day>
+                 <day>15</day>
                 </datetime>
                </property>
                <property name="minimumDateTime">
                 <datetime>
-                 <hour>2</hour>
-                 <minute>45</minute>
+                 <hour>0</hour>
+                 <minute>0</minute>
                  <second>0</second>
                  <year>2016</year>
                  <month>8</month>
                  <day>15</day>
                 </datetime>
+               </property>
+               <property name="maximumDate">
+                <date>
+                 <year>2017</year>
+                 <month>9</month>
+                 <day>15</day>
+                </date>
                </property>
                <property name="minimumDate">
                 <date>
@@ -199,10 +272,22 @@
                 <enum>QDateTimeEdit::DaySection</enum>
                </property>
                <property name="displayFormat">
-                <string>dd.MM.yyyy hh:mm A</string>
+                <string>dd.MM.yyyy</string>
+               </property>
+               <property name="calendarPopup">
+                <bool>true</bool>
                </property>
                <property name="timeSpec">
                 <enum>Qt::LocalTime</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTimeEdit" name="te_till_time">
+               <property name="font">
+                <font>
+                 <pointsize>12</pointsize>
+                </font>
                </property>
               </widget>
              </item>
@@ -246,12 +331,6 @@
          <layout class="QVBoxLayout" name="verticalLayout_8">
           <item>
            <widget class="QLabel" name="lb_logo">
-            <property name="minimumSize">
-             <size>
-              <width>300</width>
-              <height>300</height>
-             </size>
-            </property>
             <property name="text">
              <string/>
             </property>
@@ -311,7 +390,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>799</width>
+     <width>960</width>
      <height>21</height>
     </rect>
    </property>

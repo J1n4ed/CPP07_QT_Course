@@ -10,4 +10,20 @@ enum connection_info
     password = 4
 };
 
+enum monthes
+{
+    jan = 0,
+    feb = 1,
+    mar = 2,
+    apr = 3,
+    may = 4,
+    jun = 5,
+    jul = 6,
+    aug = 7,
+    sep = 8,
+    oct = 9,
+    nov = 10,
+    dec,
+};
+
 #endif // ENUMERATIONS_H

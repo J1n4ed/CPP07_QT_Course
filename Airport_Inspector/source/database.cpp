@@ -66,6 +66,11 @@ void Database::recieve_buildTable(QString query)
     }
 }
 
+void Database::recieve_gatherData(QString _query, QString _port)
+{
+    gatherData(_query, _port);
+}
+
 QSqlError Database::connectToDBase(QMap<connection_info, QString> data)
 {
     qDebug() << "DEBUG: in Database::connectToDBase";
@@ -121,8 +126,8 @@ QSqlError Database::simpleDbQuery(QString query)
 
     qDebug() << "DEBUG: Processing database: " << dataBase->databaseName();
 
-    if (!dbQuery->isActive())
-        *dbQuery = QSqlQuery(*dataBase);
+    // if (!dbQuery->isActive())
+    *dbQuery = QSqlQuery(*dataBase);
 
     dbQuery->exec(query);
 
@@ -178,6 +183,8 @@ void Database::getDataFromDB()
 
 void Database::makeRequest(QString query)
 {
+    qDebug() << "DEBUG: in Database::makeRequest";
+
     QSqlError result = simpleDbQuery(query);
 
     if (result.type() == QSqlError::NoError)
@@ -188,4 +195,89 @@ void Database::makeRequest(QString query)
     {
         emit signal_returnError(result);
     }
+}
+
+// Gather stat data on selected port using query
+void Database::gatherData(QString _query, QString _port)
+{
+    qDebug() << "DEBUG: in Database::gatherData";
+
+    QSqlError result = simpleDbQuery(_query);
+
+    if (result.type() == QSqlError::NoError)
+    {
+        getStatFromDB(_port);
+    }
+    else
+    {
+        emit signal_returnError(result);
+    }
+}
+
+void Database::getStatFromDB(QString _port)
+{
+    qDebug() << "DEBUG: in Database::getStatFromDB";
+
+    QMap<QString, QMap<int, QVector<QVector<int>>>> flightData;
+    QMap<int, QVector<QVector<int>>> departures;
+    QMap<int, QVector<QVector<int>>> arrivals;
+
+    // flight_no | arrival_port | departure_port | departure_date                 | arrival_date
+    // PG###     | Шереметьево  | Пулково        | 2017-06-22 19:05:00.000 +0300  | 2017-06-22 19:35:00.000 +0300
+    // 0         | 1            | 2              | 3                              | 4
+
+    qDebug() << "DEBUG: running data process from query";
+
+    int counter = 0;
+
+    while(dbQuery->next())
+    {
+        counter++;
+
+        // DEBUG
+        qDebug() << dbQuery->value(0).toString() << " | "
+                 << dbQuery->value(1).toString() << " | "
+                 << dbQuery->value(2).toString() << " | "
+                 << dbQuery->value(3).toString() << " | "
+                 << dbQuery->value(4).toString();
+
+        QDate departure_date = dbQuery->value(3).toDate();
+        QDate arrival_date = dbQuery->value(4).toDate();
+
+        QVector<int> tmp = {    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0     }; // 31 day fresh tmp
+
+        if (dbQuery->value(1).toString() == _port)      // arrival
+        {
+            if (arrivals[arrival_date.year()].isEmpty())
+            {
+                arrivals.insert(arrival_date.year(), {tmp, tmp, tmp, tmp, tmp, tmp, tmp, tmp, tmp, tmp, tmp, tmp});
+                arrivals[arrival_date.year()][arrival_date.month() - 1][arrival_date.day() - 1]++;
+            }
+            else
+            {
+                arrivals[arrival_date.year()][arrival_date.month() - 1][arrival_date.day() - 1]++;
+            }
+        }
+        else if (dbQuery->value(2).toString() == _port) // departure
+        {
+            if (departures[departure_date.year()].isEmpty())
+            {
+                departures.insert(departure_date.year(), {tmp, tmp, tmp, tmp, tmp, tmp, tmp, tmp, tmp, tmp, tmp, tmp});
+                departures[departure_date.year()][departure_date.month() - 1][departure_date.day() - 1]++;
+            }
+            else
+            {
+                departures[departure_date.year()][departure_date.month() - 1][departure_date.day() - 1]++;
+            }
+        }
+    }
+
+    flightData.insert("departures", departures);
+    flightData.insert("arrivals", arrivals);
+
+    qDebug() << "DEBUG: ROWS READ: " << QString::number(counter);
+
+    emit signal_sendStatData(flightData);
 }

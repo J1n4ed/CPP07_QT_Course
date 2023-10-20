@@ -45,7 +45,9 @@ private slots:
     void on_action_getports_triggered();
     void on_cb_airport_currentIndexChanged(int index);
     void on_tableViewSelection(const QItemSelection &, const QItemSelection &);
-    void on_pb_clear_clicked();
+    void on_pb_set_equal_clicked();
+
+    void on_de_from_date_dateChanged(const QDate &date);
 
 signals:
 
@@ -53,13 +55,14 @@ signals:
     void signal_disconnectFromDBase(QMap<connection_info, QString>);
     void signal_requestAirportList();
     void signal_buildTable(QString);
+    void signal_sendDataFromMain(QString, QDate, QTime, QDate, QTime);
 
 public slots:
 
     void recieve_connectionStatus(QSqlError);
     void recieve_sendAirportList(QVector<QString>);
     void recieve_returnError(QSqlError);
-    void recieve_paintTable(QSqlQueryModel *);
+    void recieve_paintTable(QSqlQueryModel *);   
 
 private:
 

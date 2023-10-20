@@ -11,6 +11,7 @@
 #include <QSqlError>
 #include <QtAlgorithms>
 #include <QSqlQueryModel>
+#include <QDate>
 
 #include "enumerations.h"
 
@@ -31,6 +32,7 @@ signals:
     void signal_sendAirportList(QVector<QString>);
     void signal_returnError(QSqlError);
     void signal_paintTable(QSqlQueryModel *);
+    void signal_sendStatData(QMap<QString, QMap<int, QVector<QVector<int>>>>);
 
 public slots:
 
@@ -38,6 +40,7 @@ public slots:
     void recieve_disconnectFromDBase(QMap<connection_info, QString>);
     void recieve_requestAirportList();
     void recieve_buildTable(QString);
+    void recieve_gatherData(QString, QString);
 
 private:
 
@@ -54,6 +57,8 @@ private:
     QString eraser(const QString &);
     void getDataFromDB();
     void makeRequest(QString);
+    void gatherData(QString, QString);
+    void getStatFromDB(QString);
 };
 
 #endif // DATABASE_H

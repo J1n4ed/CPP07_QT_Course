@@ -9,7 +9,6 @@ MainWindow::MainWindow(QWidget *parent)
     about = new About(this);
     msg = new QMessageBox(this);
     stats = new Statwindow(this);
-
     database = new Database(this);
 
     this->setWindowTitle("Инспектор аэропортов, версия 1.0");
@@ -37,13 +36,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     pix = new QPixmap;
     pix->load(":/logo/logo");
-    ui->lb_logo->setPixmap(pix->scaledToHeight(pix->height()/4));
+    ui->lb_logo->setPixmap(pix->scaledToHeight(pix->height()/6));
 
     ui->pb_reconnect->setEnabled(false);
     ui->pb_search->setEnabled(false);
 
     ui->rb_incoming->setChecked(false);
-    ui->rb_outgoing->setChecked(true);
+    ui->rb_outgoing->setChecked(true);    
 
     msg->setStandardButtons(QMessageBox::Ok);
     msg->setIcon(QMessageBox::Critical);
@@ -61,8 +60,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(database, &Database::signal_returnError, this, &MainWindow::recieve_returnError);
     connect(this, &MainWindow::signal_buildTable, database, &Database::recieve_buildTable);
     connect(database, &Database::signal_paintTable, this, &MainWindow::recieve_paintTable);
-
+    connect(this, &MainWindow::signal_sendDataFromMain, stats, &Statwindow::recieve_sendDataFromMain);
     connect(ui->tb_content->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::on_tableViewSelection);
+    connect(stats, &Statwindow::signal_gatherData, database, &Database::recieve_gatherData);
+    connect(database, &Database::signal_sendStatData, stats, &Statwindow::recieve_sendStatData);
 
     // DB connection INIT
 
@@ -73,7 +74,8 @@ MainWindow::MainWindow(QWidget *parent)
     connection_data.insert(password, "CppNeto3");
 
     auto con = [&](){connectToDB(connection_data);};
-    auto run = QtConcurrent::run(con);    
+    auto run = QtConcurrent::run(con);        
+
 }
 
 MainWindow::~MainWindow()
@@ -151,16 +153,16 @@ void MainWindow::on_pb_search_clicked()
     timeBegin = QString::number(ui->de_from_date->date().year()) + '-'
                 + QString::number(ui->de_from_date->date().month()) + '-'
                 + QString::number(ui->de_from_date->date().day()) + ' '
-                + QString::number(ui->de_from_date->dateTime().time().hour()) + ':'
-                + QString::number(ui->de_from_date->dateTime().time().minute()) + ':'
-                + QString::number(ui->de_from_date->dateTime().time().second());
+                + QString::number(ui->te_from_time->time().hour()) + ':'
+                + QString::number(ui->te_from_time->time().minute()) + ':'
+                + QString::number(ui->te_from_time->time().second());
 
     timeEnd = QString::number(ui->de_till_date->date().year()) + '-'
               + QString::number(ui->de_till_date->date().month()) + '-'
               + QString::number(ui->de_till_date->date().day()) + ' '
-              + QString::number(ui->de_till_date->dateTime().time().hour()) + ':'
-              + QString::number(ui->de_till_date->dateTime().time().minute()) + ':'
-              + QString::number(ui->de_till_date->dateTime().time().second());
+              + QString::number(ui->te_till_time->time().hour()) + ':'
+              + QString::number(ui->te_till_time->time().minute()) + ':'
+              + QString::number(ui->te_till_time->time().second());
 
     qDebug() << "DEBUG: selected start time: " << timeBegin;
     qDebug() << "DEBUG: selected end time: " << timeEnd;
@@ -197,9 +199,7 @@ void MainWindow::recieve_connectionStatus(QSqlError recievedStatus)
     {
         ui->lb_connection_status->setStyleSheet("color:green");
         ui->lb_connection_status->setText("ПОДКЛЮЧЕНО К БАЗЕ ДАННЫХ");
-        ui->pb_reconnect->setEnabled(false);        
-        ui->pb_search->setEnabled(true);
-
+        ui->pb_reconnect->setEnabled(false);
         mov_halt->stop();
         ui->lb_connection_anim->setMovie(mov_go);
         mov_go->start();
@@ -225,6 +225,9 @@ void MainWindow::recieve_sendAirportList(QVector<QString> list)
     {
         ui->cb_airport->addItem(element);
     }
+
+
+    ui->pb_search->setEnabled(true);
 }
 
 void MainWindow::recieve_returnError(QSqlError result)
@@ -249,7 +252,6 @@ void MainWindow::recieve_paintTable(QSqlQueryModel * model)
     ui->tb_content->show();
 }
 
-
 void MainWindow::on_pb_reconnect_clicked()
 {
     qDebug() << "DEBUG: in MainWindow::on_pb_reconnect_clicked";
@@ -261,8 +263,14 @@ void MainWindow::on_pb_reconnect_clicked()
 void MainWindow::on_pb_staticstics_clicked()
 {
     qDebug() << "DEBUG: in MainWindow::on_pb_staticstics_clicked";
-
-    stats->show();
+    emit signal_sendDataFromMain(
+                portSelection,
+                ui->de_from_date->date(),
+                ui->te_from_time->time(),
+                ui->de_till_date->date(),
+                ui->te_till_time->time()
+                );
+    stats->exec();
 }
 
 
@@ -294,6 +302,23 @@ void MainWindow::on_cb_airport_currentIndexChanged(int index)
 
 void MainWindow::on_tableViewSelection(const QItemSelection & col, const QItemSelection & row)
 {
+    qDebug() << "DEBUG: in MainWindow::on_tableViewSelection";
+
     auto index = row.at(1);
     qDebug() << "DEBUG: SELECTED - " << index;
 }
+
+void MainWindow::on_pb_set_equal_clicked()
+{
+    qDebug() << "DEBUG: in MainWindow::on_pb_set_equal_clicked";
+
+    ui->de_till_date->setDate(ui->de_from_date->date());
+    ui->te_till_time->setTime(ui->te_from_time->time());
+}
+
+// When first date changed
+void MainWindow::on_de_from_date_dateChanged(const QDate &date)
+{
+    ui->de_till_date->setMinimumDate(ui->de_from_date->date());
+}
+
